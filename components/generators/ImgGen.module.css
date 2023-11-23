@@ -10,21 +10,24 @@
 
 .inputField {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
-/* Add a local class to make the selector "pure" */
 .generateButton {
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background-color: #3498db;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .generateButton:hover {
@@ -33,11 +36,18 @@
 
 .imageBox {
   margin-top: 20px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .imageBox img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.imageBox:hover img {
+  transform: scale(1.1);
 }

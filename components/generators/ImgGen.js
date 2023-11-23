@@ -1,18 +1,27 @@
 // ImgGen.js
 import React, { useState } from "react";
 import styles from "./ImgGen.module.css";
+import axios from "axios";
 
 const ImgGen = () => {
   const [searchText, setSearchText] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  const handleGenerateImage = () => {
-    // Simulating a backend request to get an image URL based on the search text
-    // Replace this with actual backend API call in a real-world scenario
-    console.log(searchText);
-    const generatedImageUrl = `https://source.unsplash.com/400x300/?${searchText}`;
+  const handleGenerateImage = async () => {
+    try {
+      // Make a request to the Next.js API route
+      const response = await axios.post("/api/generateImage", {
+        searchText,
+      });
 
-    setImageUrl(generatedImageUrl);
+      // Extract the image URL from the API response
+      const generatedImageUrl = response.data.imageUrl;
+
+      // Set the generated image URL in the state
+      setImageUrl(generatedImageUrl);
+    } catch (error) {
+      console.error("Error generating image:", error.message);
+    }
   };
 
   return (
