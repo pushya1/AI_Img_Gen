@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     let generatedImageUrl;
     const { searchText } = req.body;
     let data = JSON.stringify({
-      model: "dall-e-3",
+      model: "dall-e-2",
       prompt: searchText,
       n: 1,
       size: "1024x1024",
