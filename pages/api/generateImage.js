@@ -21,8 +21,7 @@ export default async function handler(req, res) {
       url: "https://api.openai.com/v1/images/generations",
       headers: {
         "Content-Type": "application/json",
-        Authorization:
-          "Bearer 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",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       data: data,
     };
