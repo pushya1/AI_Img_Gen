@@ -1,0 +1,42 @@
+/* Footer.module.css */
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.socialIcons {
+  display: flex;
+}
+
+.iconLink {
+  margin-right: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.icon {
+  transition: color 0.3s ease-in-out;
+}
+
+.icon:hover {
+  color: #3498db;
+}

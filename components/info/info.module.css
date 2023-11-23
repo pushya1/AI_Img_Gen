@@ -1,0 +1,33 @@
+/* WebsiteInfo.module.css */
+
+.websiteInfo {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #3498db; /* Change border color to a cool blue */
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(52, 152, 219, 0.3); /* Add a subtle box shadow */
+  background-color: #ecf0f1; /* Set a light background color */
+}
+
+.title {
+  color: #3498db; /* Use the same blue color for the title */
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.infoContainer {
+  margin-top: 20px;
+}
+
+.infoContainer p {
+  color: #333; /* Set text color to a dark gray */
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Hover effect for a fun interaction */
+.websiteInfo:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease-in-out;
+}
