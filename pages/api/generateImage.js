@@ -1,46 +1,22 @@
 // pages/api/generateImage.js
-import axios from "axios";
+import OpenAI from 'openai';
+const apiKey = process.env.OPENAI_API_KEY;
+const openai = new OpenAI({
+  apiKey: "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",
+});
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
-
+  let text = req.body.text;
   try {
-    let generatedImageUrl;
-    const { searchText } = req.body;
-    let data = JSON.stringify({
-      model: "dall-e-2",
-      prompt: searchText,
-      n: 1,
-      size: "256x256",
-    });
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://api.openai.com/v1/images/generations",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      },
-      data: data,
-    };
-    await axios
-      .request(config)
-      .then((response) => {
-        generatedImageUrl = response.data.data[0].url;
-        console.log(generatedImageUrl);
-        res.status(200).json({ imageUrl: generatedImageUrl });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    // Extract the image URL from the OpenAI API response
-
-    // Return the generated image URL in the response
-  } catch (error) {
-    console.error("Error generating image:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    const image = await openai.images.generate({ model: "dall-e-3", prompt: text });
+    const url = image.data[0].url;
+    console.log(url)
+    res.status(200).json({imageUrl:url}).send("success");
+  } catch (err) {
+    res.status(500).send(err.message);
   }
+
 }

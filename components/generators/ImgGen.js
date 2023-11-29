@@ -1,27 +1,45 @@
 // ImgGen.js
 import React, { useState } from "react";
 import styles from "./ImgGen.module.css";
-import axios from "axios";
 
 const ImgGen = () => {
   const [searchText, setSearchText] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const jD = {text: searchText}
 
-  const handleGenerateImage = async () => {
+  const handleGenerateImage = async (e) => {
+    e.preventDefault();
     try {
-      // Make a request to the Next.js API route
-      const response = await axios.post("/api/generateImage", {
-        searchText,
+      const response = await fetch("/api/generateImage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jD),
       });
 
-      // Extract the image URL from the API response
-      const generatedImageUrl = response.data.imageUrl;
-
-      // Set the generated image URL in the state
+      var data = await response.json();
+      var generatedImageUrl = data.imageUrl;
+      console.log("frontend-link-recieved: ",generatedImageUrl)
       setImageUrl(generatedImageUrl);
     } catch (error) {
-      console.error("Error generating image:", error.message);
+      console.error("Error fetching data:", error);
     }
+    
+    // try {
+    //   // Make a request to the Next.js API route
+    //   const response = await axios.post("/api/generateImage", {
+    //     searchText,
+    //   });
+
+    //   // Extract the image URL from the API response
+    //   const generatedImageUrl = response.data.imageUrl;
+
+    //   // Set the generated image URL in the state
+    //   setImageUrl(generatedImageUrl);
+    // } catch (error) {
+    //   console.error("Error generating image:", error.message);
+    // }
   };
 
   return (
