@@ -60,6 +60,7 @@ const ImgGen = () => {
           Generate
         </button>
       )}
+
       {error && <p className={styles.error}>{error}</p>}
       {imageUrl && !loading && !error && (
         <div className={styles.imageBox}>

@@ -1,7 +1,7 @@
 // pages/api/generateImage.js
-import OpenAI from 'openai';
+import OpenAI from "openai";
 const openai = new OpenAI({
-  apiKey: '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',
+  apiKey: "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",
 });
 
 export default async function handler(req, res) {
@@ -10,12 +10,14 @@ export default async function handler(req, res) {
   }
   let text = req.body.text;
   try {
-    const image = await openai.images.generate({ model: "dall-e-3", prompt: text });
+    const image = await openai.images.generate({
+      model: "dall-e-3",
+      prompt: text,
+    });
     const url = image.data[0].url;
-    console.log(url)
-    res.status(200).json({imageUrl:url}).send("success");
+    console.log(url);
+    res.status(200).json({ imageUrl: url }).send("success");
   } catch (err) {
     res.status(500).send(err.message);
   }
-
 }
