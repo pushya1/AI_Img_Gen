@@ -1,8 +1,7 @@
 // pages/api/generateImage.js
 import OpenAI from 'openai';
-const apiKey = process.env.OPENAI_API_KEY;
 const openai = new OpenAI({
-  apiKey: apiKey,
+  apiKey: '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',
 });
 
 export default async function handler(req, res) {

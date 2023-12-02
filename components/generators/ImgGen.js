@@ -1,14 +1,20 @@
-// ImgGen.js
 import React, { useState } from "react";
 import styles from "./ImgGen.module.css";
+import Spinner from "../layout/Spinner"; // Import the LoadingSpinner component
 
 const ImgGen = () => {
   const [searchText, setSearchText] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const jD = {text: searchText}
+  const [loading, setLoading] = useState(false); // New state for loading
+  const [error, setError] = useState(null); // New state for error
+  const jD = { text: searchText };
 
   const handleGenerateImage = async (e) => {
     e.preventDefault();
+
+    // Set loading to true when starting the image generation process
+    setLoading(true);
+
     try {
       const response = await fetch("/api/generateImage", {
         method: "POST",
@@ -18,28 +24,23 @@ const ImgGen = () => {
         body: JSON.stringify(jD),
       });
 
-      var data = await response.json();
-      var generatedImageUrl = data.imageUrl;
-      console.log("frontend-link-recieved: ",generatedImageUrl)
+      if (!response.ok) {
+        // Handle non-OK responses (e.g., server error)
+        throw new Error(`Failed to generate image: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const generatedImageUrl = data.imageUrl;
+      console.log("frontend-link-received: ", generatedImageUrl);
       setImageUrl(generatedImageUrl);
     } catch (error) {
+      // Handle errors by setting the error state
       console.error("Error fetching data:", error);
+      setError("Failed to generate image. Please try again.");
+    } finally {
+      // Set loading to false regardless of success or error
+      setLoading(false);
     }
-    
-    // try {
-    //   // Make a request to the Next.js API route
-    //   const response = await axios.post("/api/generateImage", {
-    //     searchText,
-    //   });
-
-    //   // Extract the image URL from the API response
-    //   const generatedImageUrl = response.data.imageUrl;
-
-    //   // Set the generated image URL in the state
-    //   setImageUrl(generatedImageUrl);
-    // } catch (error) {
-    //   console.error("Error generating image:", error.message);
-    // }
   };
 
   return (
@@ -51,11 +52,16 @@ const ImgGen = () => {
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
       />
-      <button className={styles.generateButton} onClick={handleGenerateImage}>
-        Generate
-      </button>
 
-      {imageUrl && (
+      {loading ? (
+        <Spinner />
+      ) : (
+        <button className={styles.generateButton} onClick={handleGenerateImage}>
+          Generate
+        </button>
+      )}
+      {error && <p className={styles.error}>{error}</p>}
+      {imageUrl && !loading && !error && (
         <div className={styles.imageBox}>
           <img src={imageUrl} alt="Generated" />
         </div>
